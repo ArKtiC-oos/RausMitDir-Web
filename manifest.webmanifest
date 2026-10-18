@@ -1,0 +1,9 @@
+{
+  "name": "Raus mit Dir!",
+  "short_name": "Raus mit Dir!",
+  "description": "Online-Brettspiel für 2–4 Spieler",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#09111f",
+  "theme_color": "#09111f"
+}
