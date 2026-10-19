@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LumaEdit">
 <link rel="manifest" href="manifest.webmanifest">
-<title>LumaEdit 0.6.7</title>
+<title>LumaEdit 0.6.8</title>
 <style>
 :root{--bg:#070b12;--panel:#0f1726;--panel2:#162237;--line:#273752;--txt:#f6f8fc;--muted:#93a4bc;--acc:#7b8cff;--ok:#4bd9a3}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;min-height:100%}body{padding:max(10px,env(safe-area-inset-top)) 10px max(12px,env(safe-area-inset-bottom))}
@@ -157,11 +157,13 @@ body{overscroll-behavior-x:none}
 .filter,.makeupCard,.themeCard,.patternBtn,[data-r],#rot,#flipH{touch-action:manipulation}
 .filter:active,.makeupCard:active,.themeCard:active,.patternBtn:active,[data-r]:active,#rot:active,#flipH:active{transform:scale(.985)}
 .makeupCard.active,.filter.active{outline:2px solid var(--acc)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 14%,transparent)}
+
+[data-r].active{outline:2px solid var(--acc)!important;background:color-mix(in srgb,var(--acc) 14%,var(--panel2))!important}
 </style>
 </head>
 <body><div class="app">
 <div class="top">
-  <div><div class="brand">LumaEdit <span class="badge">0.6.7</span></div><div class="sub">Photo & Beauty Studio</div></div>
+  <div><div class="brand">LumaEdit <span class="badge">0.6.8</span></div><div class="sub">Photo & Beauty Studio</div></div>
   <div class="actions"><button class="btn iconbtn" id="modeToggle" aria-label="Darstellung">☀︎</button><button class="btn iconbtn flagbtn" id="langToggle" aria-label="Sprache">🇷🇺</button><button class="btn iconbtn" id="undo" disabled>↶</button><button class="btn iconbtn" id="redo" disabled>↷</button><button class="btn" id="auto" disabled data-i18n="auto">Auto</button><button class="btn" id="open" data-i18n="photo">Foto</button></div>
 </div>
 <input id="file" type="file" accept="image/*" hidden>
@@ -305,7 +307,7 @@ body{overscroll-behavior-x:none}
 <div class="row"><label data-i18n="zoom">Zoom</label><input id="cropZoom" type="range" min="100" max="220" value="100"><output>100%</output></div>
 <div class="row"><label data-i18n="horizontal">Horizontal</label><input id="cropX" type="range" min="-100" max="100" value="0"><output>0</output></div>
 <div class="row"><label data-i18n="vertical">Vertikal</label><input id="cropY" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="mini">Mit Zoom und Position kannst du den Bildausschnitt jetzt frei verschieben.</div>
+<div class="mini">Format wählen, dann das Foto direkt mit dem Finger verschieben. Zoom verändert den Ausschnitt zusätzlich.</div>
 </div>
 
 <div class="panel" id="export" hidden><div class="sectionTitle" data-i18n="saveCompare">Speichern & Vergleichen</div>
@@ -356,14 +358,14 @@ document.getElementById('auto').onclick=()=>{if(!img){document.getElementById('r
 function syncHSL(){const q=hsl[hslKey];[['#hHue','h'],['#hSat','s'],['#hLum','l']].forEach(([id,k])=>{let r=$(id);r.value=q[k];r.parentElement.querySelector('output').textContent=q[k]})}
 $$('.hslColor').forEach(b=>b.onclick=()=>{hslKey=b.dataset.h;$$('.hslColor').forEach(x=>x.classList.toggle('active',x===b));syncHSL()});
 [['#hHue','h'],['#hSat','s'],['#hLum','l']].forEach(([id,k])=>{let r=$(id);r.oninput=()=>{hsl[hslKey][k]=+r.value;r.parentElement.querySelector('output').textContent=r.value;render()};r.onchange=()=>snap()});
-function syncCrop(){$('#cropZoom').value=Math.round(cropZoom*100);$('#cropZoom').parentElement.querySelector('output').textContent=Math.round(cropZoom*100)+'%';$('#cropX').value=cropX;$('#cropX').parentElement.querySelector('output').textContent=cropX;$('#cropY').value=cropY;$('#cropY').parentElement.querySelector('output').textContent=cropY}
+function syncCrop(){$('[data-r]').forEach(b=>b.classList.toggle('active',Math.abs((+b.dataset.r)-cropRatio)<0.0001));$('#cropZoom').value=Math.round(cropZoom*100);$('#cropZoom').parentElement.querySelector('output').textContent=Math.round(cropZoom*100)+'%';$('#cropX').value=cropX;$('#cropX').parentElement.querySelector('output').textContent=cropX;$('#cropY').value=cropY;$('#cropY').parentElement.querySelector('output').textContent=cropY}
 $('#cropZoom').oninput=e=>{cropZoom=+e.target.value/100;e.target.parentElement.querySelector('output').textContent=e.target.value+'%';render()};$('#cropZoom').onchange=()=>snap();
 $('#cropX').oninput=e=>{cropX=+e.target.value;e.target.parentElement.querySelector('output').textContent=e.target.value;render()};$('#cropX').onchange=()=>snap();
 $('#cropY').oninput=e=>{cropY=+e.target.value;e.target.parentElement.querySelector('output').textContent=e.target.value;render()};$('#cropY').onchange=()=>snap();
 $('#compare').oninput=e=>{compare=+e.target.value/100;render()};
 $$('input[type=range][data-k]').forEach(r=>{r.oninput=()=>{vals[r.dataset.k]=+r.value;r.parentElement.querySelector('output').textContent=r.value;clearTimeout(renderTimer);renderTimer=setTimeout(render,10)};r.onchange=()=>{if(img)snap()}});
-$('.filter').forEach(b=>b.onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}filter=b.dataset.f;$('.filter').forEach(x=>x.classList.toggle('active',x===b));render();snap();$('#runtimeStatus').textContent='Filter: '+(b.childNodes[b.childNodes.length-2]?.textContent||b.textContent).trim()});
-$$('[data-r]').forEach(b=>b.onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}cropRatio=+b.dataset.r;render();snap();$('#runtimeStatus').textContent='Format: '+b.textContent.trim()});
+$$('.filter').forEach(b=>b.onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}filter=b.dataset.f;$$('.filter').forEach(x=>x.classList.toggle('active',x===b));render();snap();$('#runtimeStatus').textContent='Filter: '+(b.childNodes[b.childNodes.length-2]?.textContent||b.textContent).trim()});
+$('[data-r]').forEach(b=>b.onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}cropRatio=+b.dataset.r;$('[data-r]').forEach(x=>x.classList.toggle('active',x===b));render();snap();$('#runtimeStatus').textContent='Zuschnitt: '+b.textContent.trim()});
 $('#rot').onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}angle=(angle+90)%360;render();snap();$('#runtimeStatus').textContent='Bild gedreht'};$('#flipH').onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}flip=!flip;render();snap();$('#runtimeStatus').textContent='Bild gespiegelt'};
 document.getElementById('undo').onclick=()=>{if(history.length<2){document.getElementById('runtimeStatus').textContent='Noch keine Änderung zum Zurücksetzen.';return}future.push(history.pop());restore(JSON.parse(history[history.length-1]));document.getElementById('runtimeStatus').textContent='Letzte Änderung zurückgesetzt'};document.getElementById('redo').onclick=()=>{if(!future.length){document.getElementById('runtimeStatus').textContent='Nichts zum Wiederholen.';return}let s=future.pop();history.push(s);restore(JSON.parse(s));document.getElementById('runtimeStatus').textContent='Änderung wiederholt'};
 $('#reset').onclick=()=>{if(!img)return;Object.keys(vals).forEach(k=>vals[k]=0);angle=0;flip=false;cropRatio=0;filter='none';cropZoom=1;cropX=0;cropY=0;Object.keys(hsl).forEach(k=>hsl[k]={h:0,s:0,l:0});makeupStyle='natural';makeupIntensity=65;eyePoints=[];markingEyes=false;cv.classList.remove('eyeMark');syncHSL();syncCrop();render();snap();$$('input[type=range][data-k]').forEach(r=>{r.value=0;r.parentElement.querySelector('output').textContent='0'});$$('.filter').forEach(b=>b.classList.toggle('active',b.dataset.f==='none'))};
@@ -408,7 +410,25 @@ if(vals.vignette){let g=o.createRadialGradient(out.width/2,out.height/2,Math.min
 let sx=0,sy=0,sw=out.width,sh=out.height;if(cropRatio>0){let cur=sw/sh;if(cur>cropRatio){sw=sh*cropRatio}else{sh=sw/cropRatio}}
 sw/=cropZoom;sh/=cropZoom;let maxX=Math.max(0,out.width-sw),maxY=Math.max(0,out.height-sh);sx=maxX/2+(cropX/100)*(maxX/2);sy=maxY/2+(cropY/100)*(maxY/2);sx=Math.max(0,Math.min(maxX,sx));sy=Math.max(0,Math.min(maxY,sy));
 cv.width=Math.max(1,Math.round(sw));cv.height=Math.max(1,Math.round(sh));ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(out,sx,sy,sw,sh,0,0,cv.width,cv.height);drawMakeupOn(ctx,cv.width,cv.height);drawEyeMarkers(ctx,cv.width,cv.height);if(compare<1){const base2=document.createElement('canvas'),bx=base2.getContext('2d');base2.width=orig.width;base2.height=orig.height;bx.putImageData(orig,0,0);let cut=Math.round(cv.width*(1-compare));if(cut>0){ctx.save();ctx.beginPath();ctx.rect(0,0,cut,cv.height);ctx.clip();ctx.drawImage(base2,0,0,base2.width,base2.height,0,0,cv.width,cv.height);ctx.restore();ctx.strokeStyle='#fff';ctx.lineWidth=Math.max(2,cv.width/500);ctx.beginPath();ctx.moveTo(cut,0);ctx.lineTo(cut,cv.height);ctx.stroke()}}$('#zoomBadge').hidden=false;$('#zoomBadge').textContent=Math.round(cropZoom*100)+'%'} 
-cv.addEventListener('pointerup',e=>{if(!markingEyes||!img)return;const r=cv.getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;if(x<0||x>1||y<0||y>1)return;eyePoints.push({x,y});if(eyePoints.length>=2){eyePoints=eyePoints.slice(0,2).sort((a,b)=>a.x-b.x);markingEyes=false;cv.classList.remove('eyeMark');render();snap();document.getElementById('runtimeStatus').textContent='Augen markiert · Make-up ist aktiv'}else{render();document.getElementById('runtimeStatus').textContent='Erstes Auge markiert · jetzt zweites Auge antippen'}});
+let panStart=null,panBaseX=0,panBaseY=0;
+cv.addEventListener('pointerdown',e=>{
+  if(!img||markingEyes)return;
+  panStart={x:e.clientX,y:e.clientY};panBaseX=cropX;panBaseY=cropY;
+  try{cv.setPointerCapture(e.pointerId)}catch(_){}
+});
+cv.addEventListener('pointermove',e=>{
+  if(!panStart||!img||markingEyes)return;
+  const r=cv.getBoundingClientRect();
+  const dx=(e.clientX-panStart.x)/Math.max(1,r.width)*200;
+  const dy=(e.clientY-panStart.y)/Math.max(1,r.height)*200;
+  cropX=Math.max(-100,Math.min(100,panBaseX-dx));
+  cropY=Math.max(-100,Math.min(100,panBaseY-dy));
+  syncCrop();render();
+});
+cv.addEventListener('pointercancel',()=>{panStart=null});
+cv.addEventListener('pointerup',e=>{
+  if(panStart&&!markingEyes){panStart=null;snap();$('#runtimeStatus').textContent='Bildposition angepasst';return}
+  if(!markingEyes||!img)return;const r=cv.getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;if(x<0||x>1||y<0||y>1)return;eyePoints.push({x,y});if(eyePoints.length>=2){eyePoints=eyePoints.slice(0,2).sort((a,b)=>a.x-b.x);markingEyes=false;cv.classList.remove('eyeMark');render();snap();document.getElementById('runtimeStatus').textContent='Augen markiert · Make-up ist aktiv'}else{render();document.getElementById('runtimeStatus').textContent='Erstes Auge markiert · jetzt zweites Auge antippen'}});
 let pinchDist=0,pinchStart=1;cv.addEventListener('touchstart',e=>{if(e.touches.length===2){pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);pinchStart=cropZoom}}, {passive:true});cv.addEventListener('touchmove',e=>{if(e.touches.length===2&&pinchDist){let d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);cropZoom=Math.max(1,Math.min(2.2,pinchStart*d/pinchDist));syncCrop();render()}}, {passive:true});cv.addEventListener('touchend',e=>{if(pinchDist){pinchDist=0;snap()}},{passive:true});
 function refreshFilterThumbs(){if(!orig)return;const src=document.createElement('canvas'),sx=src.getContext('2d');src.width=orig.width;src.height=orig.height;sx.putImageData(orig,0,0);document.querySelectorAll('.filterThumb').forEach(c=>{const x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.save();x.filter=presetFor(c.dataset.preview);const scale=Math.max(c.width/src.width,c.height/src.height),dw=src.width*scale,dh=src.height*scale;x.drawImage(src,(c.width-dw)/2,(c.height-dh)/2,dw,dh);x.restore()})}
 document.querySelectorAll('.themeCard').forEach(b=>b.onclick=()=>{document.body.classList.remove('theme-dark','theme-rose','theme-nude','theme-lavender','theme-emerald','theme-blue');document.body.classList.add('theme-'+b.dataset.theme);document.querySelectorAll('.themeCard').forEach(x=>x.classList.toggle('active',x===b));localStorage.setItem('lumaTheme',b.dataset.theme);document.getElementById('runtimeStatus').textContent='Theme: '+b.textContent.trim()});
