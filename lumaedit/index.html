@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LumaEdit">
 <link rel="manifest" href="manifest.webmanifest">
-<title>LumaEdit 0.4.7</title>
+<title>LumaEdit 0.5.0</title>
 <style>
 :root{--bg:#070b12;--panel:#0f1726;--panel2:#162237;--line:#273752;--txt:#f6f8fc;--muted:#93a4bc;--acc:#7b8cff;--ok:#4bd9a3}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;min-height:100%}body{padding:max(10px,env(safe-area-inset-top)) 10px max(12px,env(safe-area-inset-bottom))}
@@ -24,11 +24,41 @@
 .hslHead{display:flex;gap:6px;overflow:auto;scrollbar-width:none;margin-bottom:8px}.hslColor{min-width:58px;border:1px solid var(--line);background:var(--panel2);color:white;border-radius:11px;padding:8px 6px;font-size:11px;font-weight:800}.hslColor.active{outline:2px solid var(--acc)}
 .quick{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
 .zoomBadge{position:absolute;right:8px;bottom:8px;background:#0b1322cc;border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:10px;color:#d8e2f1}
+
+.theme-dark{--bg:#070b12;--panel:#0f1726;--panel2:#162237;--line:#273752;--txt:#f6f8fc;--muted:#93a4bc;--acc:#7b8cff;--ok:#4bd9a3}
+.theme-rose{--bg:#1b1217;--panel:#2a1b24;--panel2:#38242f;--line:#5a3748;--txt:#fff7fb;--muted:#c3a7b5;--acc:#d889ac;--ok:#e2b9ca}
+.theme-nude{--bg:#17130f;--panel:#262018;--panel2:#332b21;--line:#5b4b3b;--txt:#fffaf4;--muted:#cbbba8;--acc:#c59a6d;--ok:#d8c0a2}
+.theme-lavender{--bg:#12111a;--panel:#211e2d;--panel2:#2d2940;--line:#4d4768;--txt:#fbf9ff;--muted:#b7b1ca;--acc:#a995e8;--ok:#c1b6ef}
+.theme-emerald{--bg:#0b1513;--panel:#12231f;--panel2:#19312b;--line:#2b5449;--txt:#f4fffb;--muted:#9fc0b6;--acc:#57c4a3;--ok:#7ad9bd}
+.theme-blue{--bg:#08111d;--panel:#0e1b2b;--panel2:#172940;--line:#294969;--txt:#f6fbff;--muted:#9db0c5;--acc:#5f9ff0;--ok:#6bd0d8}
+body.pattern-tattoo{background-color:var(--bg);background-image:radial-gradient(circle at 20% 20%,color-mix(in srgb,var(--acc) 13%,transparent) 0 1px,transparent 1.5px),repeating-radial-gradient(circle at 80% 10%,transparent 0 18px,color-mix(in srgb,var(--acc) 8%,transparent) 19px 20px,transparent 21px 38px)}
+body.pattern-marble{background-color:var(--bg);background-image:linear-gradient(120deg,transparent 0 38%,color-mix(in srgb,var(--txt) 4%,transparent) 39% 41%,transparent 42% 100%),linear-gradient(55deg,transparent 0 62%,color-mix(in srgb,var(--acc) 7%,transparent) 63% 65%,transparent 66% 100%)}
+body.pattern-floral{background-color:var(--bg);background-image:radial-gradient(ellipse at 15% 25%,color-mix(in srgb,var(--acc) 7%,transparent) 0 8%,transparent 9%),radial-gradient(ellipse at 85% 75%,color-mix(in srgb,var(--acc) 6%,transparent) 0 7%,transparent 8%)}
+.categories{display:flex;gap:8px;overflow:auto;scrollbar-width:none}
+.cat{min-width:116px;flex:0 0 auto}
+.previewGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.previewCard{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:14px;padding:7px;text-align:left;font-weight:800;overflow:hidden}
+.previewCard.active{outline:2px solid var(--acc)}
+.previewCard .thumb{height:82px;border-radius:10px;overflow:hidden;background:#0b0f16;display:grid;place-items:center;margin-bottom:7px}
+.previewCard .thumb canvas{width:100%;height:100%;object-fit:cover}
+.previewCard small{display:block;color:var(--muted);font-weight:600;font-size:10px;margin-top:2px}
+.makeupGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.makeupCard{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:14px;padding:7px;text-align:left;font-weight:800}
+.makeupCard.active{outline:2px solid var(--acc)}
+.makeupVisual{height:86px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#2c1d27,#0d111a);display:grid;place-items:center;margin-bottom:7px}
+.makeupVisual svg{width:100%;height:100%}
+.themeGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.themeCard{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:14px;padding:10px;text-align:left;font-weight:800}
+.themeCard.active{outline:2px solid var(--acc)}
+.themeSwatch{height:52px;border-radius:10px;margin-bottom:7px;border:1px solid #ffffff22}
+.patternRow{display:flex;gap:8px;overflow:auto;scrollbar-width:none}
+.patternBtn{min-width:110px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:12px;padding:10px;font-weight:800}
+.patternBtn.active{outline:2px solid var(--acc)}
 </style>
 </head>
 <body><div class="app">
 <div class="top">
-  <div><div class="brand">LumaEdit <span class="badge">0.4.7</span></div><div class="sub">Mobile Photo Editor · Laufzeitfix</div></div>
+  <div><div class="brand">LumaEdit <span class="badge">0.5.0</span></div><div class="sub">Mobile Photo Editor · Beauty Preview</div></div>
   <div class="actions"><button class="btn iconbtn" id="undo" disabled>↶</button><button class="btn iconbtn" id="redo" disabled>↷</button><button class="btn" id="auto" disabled>Auto</button><button class="btn" id="open">Foto</button></div>
 </div>
 <input id="file" type="file" accept="image/*" hidden>
@@ -38,6 +68,8 @@
 <button class="cat active" data-cat="adjust">Regler</button>
 <button class="cat" data-cat="filters">Filter</button>
 <button class="cat" data-cat="tools">Werkzeuge</button>
+<button class="cat" data-cat="makeup">Make-up</button>
+<button class="cat" data-cat="design">Design</button>
 </div>
 <div id="adjustNav">
   <div class="sectionTitle">Bild einstellen</div>
@@ -56,6 +88,8 @@
     <button class="tab" data-tab="export">Exportieren</button>
   </div>
 </div>
+<div id="makeupNav" hidden><div class="sectionTitle">Beauty</div></div>
+<div id="designNav" hidden><div class="sectionTitle">App-Design</div></div>
 
 <div class="panel" id="light"><div class="sectionTitle">Licht & Tonwerte</div>
 <div class="row"><label>Belichtung</label><input data-k="exposure" type="range" min="-100" max="100" value="0"><output>0</output></div>
@@ -99,22 +133,55 @@
 <div class="mini">Bearbeitet nur den gewählten Farbbereich.</div>
 </div>
 
-<div class="panel" id="filter" hidden><div class="sectionTitle">Filter · ohne Regler auswählen</div>
-<div class="filters">
-<button class="filter active" disabled data-f="none">Original</button>
-<button class="filter" disabled data-f="vivid">Vivid</button>
-<button class="filter" disabled data-f="portrait">Portrait</button>
-<button class="filter" disabled data-f="warm">Warm</button>
-<button class="filter" disabled data-f="cool">Cool</button>
-<button class="filter" disabled data-f="mono">Mono</button>
-<button class="filter" disabled data-f="film">Film</button>
-<button class="filter" disabled data-f="matte">Matte</button>
-<button class="filter" disabled data-f="dramatic">Dramatic</button>
-<button class="filter" disabled data-f="night">Night</button>
-<button class="filter" disabled data-f="soft">Soft</button>
-<button class="filter" disabled data-f="retro">Retro</button>
+<div class="panel" id="filter" hidden><div class="sectionTitle">Filter · mit Vorschau</div>
+<div class="previewGrid">
+<button class="previewCard filter active" disabled data-f="none"><div class="thumb"><canvas class="filterThumb" data-preview="none" width="180" height="110"></canvas></div>Original<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="vivid"><div class="thumb"><canvas class="filterThumb" data-preview="vivid" width="180" height="110"></canvas></div>Vivid<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="portrait"><div class="thumb"><canvas class="filterThumb" data-preview="portrait" width="180" height="110"></canvas></div>Portrait<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="warm"><div class="thumb"><canvas class="filterThumb" data-preview="warm" width="180" height="110"></canvas></div>Warm<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="cool"><div class="thumb"><canvas class="filterThumb" data-preview="cool" width="180" height="110"></canvas></div>Cool<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="mono"><div class="thumb"><canvas class="filterThumb" data-preview="mono" width="180" height="110"></canvas></div>Schwarzweiß<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="film"><div class="thumb"><canvas class="filterThumb" data-preview="film" width="180" height="110"></canvas></div>Film<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="matte"><div class="thumb"><canvas class="filterThumb" data-preview="matte" width="180" height="110"></canvas></div>Matte<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="dramatic"><div class="thumb"><canvas class="filterThumb" data-preview="dramatic" width="180" height="110"></canvas></div>Dramatic<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="night"><div class="thumb"><canvas class="filterThumb" data-preview="night" width="180" height="110"></canvas></div>Night<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="soft"><div class="thumb"><canvas class="filterThumb" data-preview="soft" width="180" height="110"></canvas></div>Soft<small>Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="retro"><div class="thumb"><canvas class="filterThumb" data-preview="retro" width="180" height="110"></canvas></div>Retro<small>Vorschau</small></button>
 </div>
-<div class="mini">Hier wählst du nur einen Look. Die Feinabstimmung bleibt getrennt unter „Regler“.</div>
+<div class="mini">Du siehst den Look bereits auf der kleinen Vorschau, bevor du ihn auswählst.</div>
+</div>
+
+<div class="panel" id="makeup" hidden>
+<div class="sectionTitle">Augen-Make-up · Vorschau</div>
+<div class="makeupGrid">
+<button class="makeupCard active" data-makeup="natural"><div class="makeupVisual"><svg viewBox="0 0 180 90"><rect width="180" height="90" fill="#c99b82"/><path d="M28 48 Q90 15 152 48 Q90 76 28 48Z" fill="#fff7f4"/><ellipse cx="90" cy="48" rx="21" ry="21" fill="#7e5a38"/><ellipse cx="90" cy="48" rx="9" ry="9" fill="#111"/><path d="M29 47 Q90 18 151 47" stroke="#5e3a2e" stroke-width="6" fill="none"/></svg></div>Natural<small>Sanft & alltagstauglich</small></button>
+<button class="makeupCard" data-makeup="smokey"><div class="makeupVisual"><svg viewBox="0 0 180 90"><rect width="180" height="90" fill="#b88d7a"/><ellipse cx="90" cy="46" rx="63" ry="28" fill="#2b2730" opacity=".55"/><path d="M28 48 Q90 15 152 48 Q90 76 28 48Z" fill="#f8efed"/><ellipse cx="90" cy="48" rx="20" ry="20" fill="#6d513c"/><ellipse cx="90" cy="48" rx="9" ry="9" fill="#111"/><path d="M28 46 Q90 15 152 46" stroke="#151419" stroke-width="7" fill="none"/></svg></div>Smokey<small>Dunkel & weich verblendet</small></button>
+<button class="makeupCard" data-makeup="cateye"><div class="makeupVisual"><svg viewBox="0 0 180 90"><rect width="180" height="90" fill="#cf9d86"/><path d="M25 50 Q90 18 150 48 Q90 73 25 50Z" fill="#fff7f3"/><ellipse cx="90" cy="48" rx="20" ry="20" fill="#796149"/><ellipse cx="90" cy="48" rx="8" ry="8" fill="#111"/><path d="M27 48 Q90 16 150 47 L171 34" stroke="#0a0a0d" stroke-width="7" fill="none"/></svg></div>Cat Eye<small>Präziser Wing</small></button>
+<button class="makeupCard" data-makeup="glam"><div class="makeupVisual"><svg viewBox="0 0 180 90"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#8b596d"/><stop offset=".55" stop-color="#d2a070"/><stop offset="1" stop-color="#5c374e"/></linearGradient></defs><rect width="180" height="90" fill="#c99782"/><ellipse cx="90" cy="42" rx="65" ry="29" fill="url(#g)" opacity=".75"/><path d="M27 49 Q90 18 153 49 Q90 75 27 49Z" fill="#fff6f2"/><ellipse cx="90" cy="49" rx="20" ry="20" fill="#765237"/><ellipse cx="90" cy="49" rx="8" ry="8" fill="#111"/></svg></div>Soft Glam<small>Warm & elegant</small></button>
+<button class="makeupCard" data-makeup="blue"><div class="makeupVisual"><svg viewBox="0 0 180 90"><rect width="180" height="90" fill="#c89982"/><path d="M28 48 Q90 16 152 48 Q90 75 28 48Z" fill="#fff8f4"/><path d="M30 46 Q90 13 151 46" stroke="#356bd0" stroke-width="8" fill="none"/><ellipse cx="90" cy="48" rx="20" ry="20" fill="#6f513d"/><ellipse cx="90" cy="48" rx="8" ry="8" fill="#111"/></svg></div>Blue Accent<small>Farbiger Akzent</small></button>
+<button class="makeupCard" data-makeup="glitter"><div class="makeupVisual"><svg viewBox="0 0 180 90"><rect width="180" height="90" fill="#ca9a83"/><ellipse cx="90" cy="39" rx="62" ry="24" fill="#7a5477" opacity=".55"/><g fill="#f4d7ff"><circle cx="60" cy="30" r="3"/><circle cx="83" cy="25" r="2"/><circle cx="105" cy="31" r="3"/><circle cx="122" cy="26" r="2"/></g><path d="M28 48 Q90 16 152 48 Q90 75 28 48Z" fill="#fff7f4"/><ellipse cx="90" cy="48" rx="20" ry="20" fill="#72533c"/><ellipse cx="90" cy="48" rx="8" ry="8" fill="#111"/></svg></div>Glitter<small>Festlich & auffällig</small></button>
+</div>
+<div class="mini">0.5.0 zeigt die Beauty-Stile als echte Auswahl mit Bildvorschau. Das automatische Auftragen auf Augen folgt als nächster Beauty-Schritt.</div>
+</div>
+
+<div class="panel" id="design" hidden>
+<div class="sectionTitle">Farbschema</div>
+<div class="themeGrid">
+<button class="themeCard active" data-theme="dark"><div class="themeSwatch" style="background:linear-gradient(135deg,#070b12,#162237,#7b8cff)"></div>Dark Elegant</button>
+<button class="themeCard" data-theme="rose"><div class="themeSwatch" style="background:linear-gradient(135deg,#1b1217,#38242f,#d889ac)"></div>Rosé Nude</button>
+<button class="themeCard" data-theme="nude"><div class="themeSwatch" style="background:linear-gradient(135deg,#17130f,#332b21,#c59a6d)"></div>Champagne Nude</button>
+<button class="themeCard" data-theme="lavender"><div class="themeSwatch" style="background:linear-gradient(135deg,#12111a,#2d2940,#a995e8)"></div>Lavender</button>
+<button class="themeCard" data-theme="emerald"><div class="themeSwatch" style="background:linear-gradient(135deg,#0b1513,#19312b,#57c4a3)"></div>Emerald</button>
+<button class="themeCard" data-theme="blue"><div class="themeSwatch" style="background:linear-gradient(135deg,#08111d,#172940,#5f9ff0)"></div>Blue Night</button>
+</div>
+<div class="sectionTitle" style="margin-top:12px">Hintergrundstruktur</div>
+<div class="patternRow">
+<button class="patternBtn active" data-pattern="none">Clean</button>
+<button class="patternBtn" data-pattern="tattoo">Tattoo Line</button>
+<button class="patternBtn" data-pattern="marble">Soft Marble</button>
+<button class="patternBtn" data-pattern="floral">Minimal Floral</button>
+</div>
+<div class="mini">Themes ändern nur die App-Oberfläche, nicht dein Foto.</div>
 </div>
 
 <div class="panel" id="crop" hidden><div class="sectionTitle">Zuschneiden & Ausrichten</div>
@@ -155,9 +222,9 @@ function restore(s){Object.assign(vals,s.vals);if(s.hsl)Object.keys(hsl).forEach
 function snap(){history.push(JSON.stringify(state()));if(history.length>40)history.shift();future=[];updateHist()}
 function updateHist(){$('#undo').disabled=history.length<2;$('#redo').disabled=future.length===0}
 function cl(v){return Math.max(0,Math.min(255,v))}
-function openFile(f){if(!f)return;let u=URL.createObjectURL(f),im=new Image();im.onload=()=>{img=im;const max=1800,sc=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight));cv.width=Math.round(im.naturalWidth*sc);cv.height=Math.round(im.naturalHeight*sc);ctx.drawImage(im,0,0,cv.width,cv.height);orig=ctx.getImageData(0,0,cv.width,cv.height);Object.keys(vals).forEach(k=>vals[k]=0);angle=0;flip=false;cropRatio=0;filter='none';cropZoom=1;cropX=0;cropY=0;Object.keys(hsl).forEach(k=>hsl[k]={h:0,s:0,l:0});$('#empty').hidden=true;cv.hidden=false;$('#save').disabled=$('#reset').disabled=$('#auto').disabled=false;$$('.filter,[data-r],#rot,#flipH').forEach(x=>x.disabled=false);$('#runtimeStatus').textContent='Foto geladen · Bearbeitung aktiv';history=[JSON.stringify(state())];future=[];render();updateHist();URL.revokeObjectURL(u)};im.src=u}
+function openFile(f){if(!f)return;let u=URL.createObjectURL(f),im=new Image();im.onload=()=>{img=im;const max=1800,sc=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight));cv.width=Math.round(im.naturalWidth*sc);cv.height=Math.round(im.naturalHeight*sc);ctx.drawImage(im,0,0,cv.width,cv.height);orig=ctx.getImageData(0,0,cv.width,cv.height);Object.keys(vals).forEach(k=>vals[k]=0);angle=0;flip=false;cropRatio=0;filter='none';cropZoom=1;cropX=0;cropY=0;Object.keys(hsl).forEach(k=>hsl[k]={h:0,s:0,l:0});$('#empty').hidden=true;cv.hidden=false;$('#save').disabled=$('#reset').disabled=$('#auto').disabled=false;$$('.filter,[data-r],#rot,#flipH').forEach(x=>x.disabled=false);$('#runtimeStatus').textContent='Foto geladen · Bearbeitung aktiv';history=[JSON.stringify(state())];future=[];render();refreshFilterThumbs();updateHist();URL.revokeObjectURL(u)};im.src=u}
 $('#open').onclick=()=>$('#file').click(); window.addEventListener('error',e=>{const s=$('#runtimeStatus');if(s)s.textContent='Fehler: '+(e.message||'unbekannt')});$('#file').onchange=e=>openFile(e.target.files[0]);
-const panelIds=['light','color','detail','hsl','filter','crop','export'];
+const panelIds=['light','color','detail','hsl','filter','makeup','design','crop','export'];
 function showPanel(id){
   panelIds.forEach(p=>$('#'+p).hidden=p!==id);
   $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
@@ -169,9 +236,13 @@ $$('.cat').forEach(b=>b.onclick=()=>{
   $('#adjustNav').hidden=c!=='adjust';
   $('#filterNav').hidden=c!=='filters';
   $('#toolsNav').hidden=c!=='tools';
+  $('#makeupNav').hidden=c!=='makeup';
+  $('#designNav').hidden=c!=='design';
   if(c==='adjust') showPanel('light');
   if(c==='filters'){showPanel('filter');if(!img)$('#runtimeStatus').textContent='Erst ein Foto wählen, dann funktionieren die Filter.'}
   if(c==='tools'){showPanel('crop');if(!img)$('#runtimeStatus').textContent='Erst ein Foto wählen, dann funktionieren Crop, Drehen und Spiegeln.'}
+  if(c==='makeup'){showPanel('makeup');$('#runtimeStatus').textContent='Beauty-Vorschauen geöffnet'}
+  if(c==='design'){showPanel('design');$('#runtimeStatus').textContent='App-Design auswählen'}
 });
 document.getElementById('auto').onclick=()=>{if(!img){document.getElementById('runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}Object.assign(vals,{exposure:12,brightness:4,contrast:12,highlights:-20,shadows:24,whites:10,blacks:-10,saturate:6,vibrance:22,clarity:12,sharpness:15});document.querySelectorAll('input[data-k]').forEach(r=>{r.value=vals[r.dataset.k];const o=r.parentElement.querySelector('output');if(o)o.textContent=r.value});render();snap();document.getElementById('runtimeStatus').textContent='Auto-Optimierung angewendet'};
 function syncHSL(){const q=hsl[hslKey];[['#hHue','h'],['#hSat','s'],['#hLum','l']].forEach(([id,k])=>{let r=$(id);r.value=q[k];r.parentElement.querySelector('output').textContent=q[k]})}
@@ -188,7 +259,8 @@ $$('[data-r]').forEach(b=>b.onclick=()=>{if(!img){$('#runtimeStatus').textConten
 $('#rot').onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}angle=(angle+90)%360;render();snap();$('#runtimeStatus').textContent='Bild gedreht'};$('#flipH').onclick=()=>{if(!img){$('#runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}flip=!flip;render();snap();$('#runtimeStatus').textContent='Bild gespiegelt'};
 document.getElementById('undo').onclick=()=>{if(history.length<2){document.getElementById('runtimeStatus').textContent='Noch keine Änderung zum Zurücksetzen.';return}future.push(history.pop());restore(JSON.parse(history[history.length-1]));document.getElementById('runtimeStatus').textContent='Letzte Änderung zurückgesetzt'};document.getElementById('redo').onclick=()=>{if(!future.length){document.getElementById('runtimeStatus').textContent='Nichts zum Wiederholen.';return}let s=future.pop();history.push(s);restore(JSON.parse(s));document.getElementById('runtimeStatus').textContent='Änderung wiederholt'};
 $('#reset').onclick=()=>{if(!img)return;Object.keys(vals).forEach(k=>vals[k]=0);angle=0;flip=false;cropRatio=0;filter='none';cropZoom=1;cropX=0;cropY=0;Object.keys(hsl).forEach(k=>hsl[k]={h:0,s:0,l:0});syncHSL();syncCrop();render();snap();$$('input[type=range][data-k]').forEach(r=>{r.value=0;r.parentElement.querySelector('output').textContent='0'});$$('.filter').forEach(b=>b.classList.toggle('active',b.dataset.f==='none'))};
-function preset(){return {none:'',vivid:'contrast(110%) saturate(122%)',portrait:'brightness(103%) contrast(96%) saturate(106%)',warm:'sepia(10%) saturate(112%)',cool:'hue-rotate(8deg) saturate(104%)',mono:'grayscale(100%) contrast(110%)',film:'sepia(16%) contrast(106%) saturate(88%)',matte:'contrast(88%) saturate(82%) brightness(106%)',dramatic:'contrast(132%) saturate(85%)',night:'brightness(88%) contrast(118%) saturate(92%) hue-rotate(4deg)',soft:'brightness(105%) contrast(90%) saturate(95%)',retro:'sepia(26%) contrast(104%) saturate(76%)'}[filter]||''}
+function presetFor(name){return {none:'',vivid:'contrast(110%) saturate(122%)',portrait:'brightness(103%) contrast(96%) saturate(106%)',warm:'sepia(10%) saturate(112%)',cool:'hue-rotate(8deg) saturate(104%)',mono:'grayscale(100%) contrast(110%)',film:'sepia(16%) contrast(106%) saturate(88%)',matte:'contrast(88%) saturate(82%) brightness(106%)',dramatic:'contrast(132%) saturate(85%)',night:'brightness(88%) contrast(118%) saturate(92%) hue-rotate(4deg)',soft:'brightness(105%) contrast(90%) saturate(95%)',retro:'sepia(26%) contrast(104%) saturate(76%)'}[name]||''}
+function preset(){return presetFor(filter)}
 function rgb2hsl(r,g,b){r/=255;g/=255;b/=255;let mx=Math.max(r,g,b),mn=Math.min(r,g,b),h=0,s=0,l=(mx+mn)/2,d=mx-mn;if(d){s=l>.5?d/(2-mx-mn):d/(mx+mn);switch(mx){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;default:h=(r-g)/d+4}h*=60}return[h,s,l]}
 function hsl2rgb(h,s,l){h=((h%360)+360)%360;let c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2,r=0,g=0,b=0;if(h<60){r=c;g=x}else if(h<120){r=x;g=c}else if(h<180){g=c;b=x}else if(h<240){g=x;b=c}else if(h<300){r=x;b=c}else{r=c;b=x}return[(r+m)*255,(g+m)*255,(b+m)*255]}
 function hslBand(h){if(h<15||h>=345)return'red';if(h<45)return'orange';if(h<75)return'yellow';if(h<165)return'green';if(h<195)return'aqua';if(h<255)return'blue';if(h<300)return'purple';return'magenta'}
@@ -202,6 +274,12 @@ let sx=0,sy=0,sw=out.width,sh=out.height;if(cropRatio>0){let cur=sw/sh;if(cur>cr
 sw/=cropZoom;sh/=cropZoom;let maxX=Math.max(0,out.width-sw),maxY=Math.max(0,out.height-sh);sx=maxX/2+(cropX/100)*(maxX/2);sy=maxY/2+(cropY/100)*(maxY/2);sx=Math.max(0,Math.min(maxX,sx));sy=Math.max(0,Math.min(maxY,sy));
 cv.width=Math.max(1,Math.round(sw));cv.height=Math.max(1,Math.round(sh));ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(out,sx,sy,sw,sh,0,0,cv.width,cv.height);if(compare<1){const base2=document.createElement('canvas'),bx=base2.getContext('2d');base2.width=orig.width;base2.height=orig.height;bx.putImageData(orig,0,0);let cut=Math.round(cv.width*(1-compare));if(cut>0){ctx.save();ctx.beginPath();ctx.rect(0,0,cut,cv.height);ctx.clip();ctx.drawImage(base2,0,0,base2.width,base2.height,0,0,cv.width,cv.height);ctx.restore();ctx.strokeStyle='#fff';ctx.lineWidth=Math.max(2,cv.width/500);ctx.beginPath();ctx.moveTo(cut,0);ctx.lineTo(cut,cv.height);ctx.stroke()}}$('#zoomBadge').hidden=false;$('#zoomBadge').textContent=Math.round(cropZoom*100)+'%'} 
 let pinchDist=0,pinchStart=1;cv.addEventListener('touchstart',e=>{if(e.touches.length===2){pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);pinchStart=cropZoom}}, {passive:true});cv.addEventListener('touchmove',e=>{if(e.touches.length===2&&pinchDist){let d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);cropZoom=Math.max(1,Math.min(2.2,pinchStart*d/pinchDist));syncCrop();render()}}, {passive:true});cv.addEventListener('touchend',e=>{if(pinchDist){pinchDist=0;snap()}},{passive:true});
+function refreshFilterThumbs(){if(!orig)return;const src=document.createElement('canvas'),sx=src.getContext('2d');src.width=orig.width;src.height=orig.height;sx.putImageData(orig,0,0);document.querySelectorAll('.filterThumb').forEach(c=>{const x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.save();x.filter=presetFor(c.dataset.preview);const scale=Math.max(c.width/src.width,c.height/src.height),dw=src.width*scale,dh=src.height*scale;x.drawImage(src,(c.width-dw)/2,(c.height-dh)/2,dw,dh);x.restore()})}
+document.querySelectorAll('.themeCard').forEach(b=>b.onclick=()=>{document.body.classList.remove('theme-dark','theme-rose','theme-nude','theme-lavender','theme-emerald','theme-blue');document.body.classList.add('theme-'+b.dataset.theme);document.querySelectorAll('.themeCard').forEach(x=>x.classList.toggle('active',x===b));localStorage.setItem('lumaTheme',b.dataset.theme);document.getElementById('runtimeStatus').textContent='Theme: '+b.textContent.trim()});
+document.querySelectorAll('.patternBtn').forEach(b=>b.onclick=()=>{document.body.classList.remove('pattern-tattoo','pattern-marble','pattern-floral');if(b.dataset.pattern!=='none')document.body.classList.add('pattern-'+b.dataset.pattern);document.querySelectorAll('.patternBtn').forEach(x=>x.classList.toggle('active',x===b));localStorage.setItem('lumaPattern',b.dataset.pattern);document.getElementById('runtimeStatus').textContent='Hintergrund: '+b.textContent.trim()});
+document.querySelectorAll('.makeupCard').forEach(b=>b.onclick=()=>{document.querySelectorAll('.makeupCard').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('runtimeStatus').textContent='Beauty-Stil gewählt: '+b.childNodes[b.childNodes.length-2].textContent.trim()+' · Anwendung folgt in 0.5.1'});
+const savedTheme=localStorage.getItem('lumaTheme')||'dark',savedPattern=localStorage.getItem('lumaPattern')||'none';document.body.classList.add('theme-'+savedTheme);if(savedPattern!=='none')document.body.classList.add('pattern-'+savedPattern);document.querySelectorAll('.themeCard').forEach(b=>b.classList.toggle('active',b.dataset.theme===savedTheme));document.querySelectorAll('.patternBtn').forEach(b=>b.classList.toggle('active',b.dataset.pattern===savedPattern));
+
 $('#save').onclick=()=>{if(!img)return;const type=$('#format').value,q=+$('#quality').value;cv.toBlob(blob=>{if(!blob)return;let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='LumaEdit_'+Date.now()+(type==='image/png'?'.png':'.jpg');a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000)},type,type==='image/png'?undefined:q)};
 if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 })();
