@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LumaEdit">
 <link rel="manifest" href="manifest.webmanifest">
-<title>LumaEdit 0.6.6</title>
+<title>LumaEdit 0.6.7</title>
 <style>
 :root{--bg:#070b12;--panel:#0f1726;--panel2:#162237;--line:#273752;--txt:#f6f8fc;--muted:#93a4bc;--acc:#7b8cff;--ok:#4bd9a3}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;min-height:100%}body{padding:max(10px,env(safe-area-inset-top)) 10px max(12px,env(safe-area-inset-bottom))}
@@ -153,11 +153,15 @@ body{overscroll-behavior-x:none}
 .makeupCard[data-makeup="glam"] .makeupVisual img{object-position:50% 48%;filter:saturate(.85) brightness(1.04)}
 .makeupCard[data-makeup="blue"] .makeupVisual img{object-position:65% 42%;filter:hue-rotate(12deg) saturate(1.2)}
 .makeupCard[data-makeup="glitter"] .makeupVisual img{object-position:65% 42%;filter:saturate(1.25) contrast(1.06)}
+
+.filter,.makeupCard,.themeCard,.patternBtn,[data-r],#rot,#flipH{touch-action:manipulation}
+.filter:active,.makeupCard:active,.themeCard:active,.patternBtn:active,[data-r]:active,#rot:active,#flipH:active{transform:scale(.985)}
+.makeupCard.active,.filter.active{outline:2px solid var(--acc)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 14%,transparent)}
 </style>
 </head>
 <body><div class="app">
 <div class="top">
-  <div><div class="brand">LumaEdit <span class="badge">0.6.6</span></div><div class="sub">Photo & Beauty Studio</div></div>
+  <div><div class="brand">LumaEdit <span class="badge">0.6.7</span></div><div class="sub">Photo & Beauty Studio</div></div>
   <div class="actions"><button class="btn iconbtn" id="modeToggle" aria-label="Darstellung">☀︎</button><button class="btn iconbtn flagbtn" id="langToggle" aria-label="Sprache">🇷🇺</button><button class="btn iconbtn" id="undo" disabled>↶</button><button class="btn iconbtn" id="redo" disabled>↷</button><button class="btn" id="auto" disabled data-i18n="auto">Auto</button><button class="btn" id="open" data-i18n="photo">Foto</button></div>
 </div>
 <input id="file" type="file" accept="image/*" hidden>
@@ -409,7 +413,7 @@ let pinchDist=0,pinchStart=1;cv.addEventListener('touchstart',e=>{if(e.touches.l
 function refreshFilterThumbs(){if(!orig)return;const src=document.createElement('canvas'),sx=src.getContext('2d');src.width=orig.width;src.height=orig.height;sx.putImageData(orig,0,0);document.querySelectorAll('.filterThumb').forEach(c=>{const x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.save();x.filter=presetFor(c.dataset.preview);const scale=Math.max(c.width/src.width,c.height/src.height),dw=src.width*scale,dh=src.height*scale;x.drawImage(src,(c.width-dw)/2,(c.height-dh)/2,dw,dh);x.restore()})}
 document.querySelectorAll('.themeCard').forEach(b=>b.onclick=()=>{document.body.classList.remove('theme-dark','theme-rose','theme-nude','theme-lavender','theme-emerald','theme-blue');document.body.classList.add('theme-'+b.dataset.theme);document.querySelectorAll('.themeCard').forEach(x=>x.classList.toggle('active',x===b));localStorage.setItem('lumaTheme',b.dataset.theme);document.getElementById('runtimeStatus').textContent='Theme: '+b.textContent.trim()});
 document.querySelectorAll('.patternBtn').forEach(b=>b.onclick=()=>{document.body.classList.remove('pattern-tattoo','pattern-marble','pattern-floral');if(b.dataset.pattern!=='none')document.body.classList.add('pattern-'+b.dataset.pattern);document.querySelectorAll('.patternBtn').forEach(x=>x.classList.toggle('active',x===b));localStorage.setItem('lumaPattern',b.dataset.pattern);document.getElementById('runtimeStatus').textContent='Hintergrund: '+b.textContent.trim()});
-document.querySelectorAll('.makeupCard').forEach(b=>b.onclick=()=>{makeupStyle=b.dataset.makeup;document.querySelectorAll('.makeupCard').forEach(x=>x.classList.toggle('active',x===b));if(eyePoints.length<2){document.getElementById('runtimeStatus').textContent='Stil gewählt · jetzt Augen markieren';return}render();snap();document.getElementById('runtimeStatus').textContent='Make-up angewendet: '+b.textContent.trim().split('\n')[0]});
+document.querySelectorAll('.makeupCard').forEach(b=>b.onclick=()=>{makeupStyle=b.dataset.makeup;document.querySelectorAll('.makeupCard').forEach(x=>x.classList.toggle('active',x===b));if(eyePoints.length<2){document.getElementById('runtimeStatus').textContent='Make-up gewählt: '+b.dataset.makeup+' · jetzt Augen markieren';return}render();snap();document.getElementById('runtimeStatus').textContent='Make-up angewendet: '+b.dataset.makeup});
 document.getElementById('markEyes').onclick=()=>{if(!img){document.getElementById('runtimeStatus').textContent='Bitte zuerst ein Foto wählen.';return}markingEyes=true;eyePoints=[];cv.classList.add('eyeMark');document.getElementById('runtimeStatus').textContent='Tippe nacheinander auf beide Augen im Foto.';render()};
 document.getElementById('makeupOff').onclick=()=>{if(!img)return;makeupStyle='none';render();snap();document.getElementById('runtimeStatus').textContent='Make-up ausgeschaltet'};
 document.getElementById('makeupIntensity').oninput=e=>{makeupIntensity=+e.target.value;e.target.parentElement.querySelector('output').textContent=e.target.value;if(img&&eyePoints.length===2)render()};
