@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LumaEdit">
 <link rel="manifest" href="manifest.webmanifest">
-<title>LumaEdit 0.6.4</title>
+<title>LumaEdit 0.6.5</title>
 <style>
 :root{--bg:#070b12;--panel:#0f1726;--panel2:#162237;--line:#273752;--txt:#f6f8fc;--muted:#93a4bc;--acc:#7b8cff;--ok:#4bd9a3}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;min-height:100%}body{padding:max(10px,env(safe-area-inset-top)) 10px max(12px,env(safe-area-inset-bottom))}
@@ -148,7 +148,7 @@ body{overscroll-behavior-x:none}
 </head>
 <body><div class="app">
 <div class="top">
-  <div><div class="brand">LumaEdit <span class="badge">0.6.4</span></div><div class="sub">Photo & Beauty Studio</div></div>
+  <div><div class="brand">LumaEdit <span class="badge">0.6.5</span></div><div class="sub">Photo & Beauty Studio</div></div>
   <div class="actions"><button class="btn iconbtn" id="modeToggle" aria-label="Darstellung">☀︎</button><button class="btn iconbtn flagbtn" id="langToggle" aria-label="Sprache">🇷🇺</button><button class="btn iconbtn" id="undo" disabled>↶</button><button class="btn iconbtn" id="redo" disabled>↷</button><button class="btn" id="auto" disabled data-i18n="auto">Auto</button><button class="btn" id="open" data-i18n="photo">Foto</button></div>
 </div>
 <input id="file" type="file" accept="image/*" hidden>
@@ -450,5 +450,91 @@ const savedTheme=localStorage.getItem('lumaTheme')||'dark',savedPattern=localSto
 
 $('#save').onclick=()=>{if(!img)return;const type=$('#format').value,q=+$('#quality').value;cv.toBlob(blob=>{if(!blob)return;let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='LumaEdit_'+Date.now()+(type==='image/png'?'.png':'.jpg');a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000)},type,type==='image/png'?undefined:q)};
 if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
+</script>
+<script>
+(() => {
+  const q=s=>document.querySelector(s), qa=s=>Array.from(document.querySelectorAll(s));
+  const panels=['light','color','detail','hsl','filter','makeup','design','crop','export'];
+  const navs=['adjustNav','filterNav','toolsNav','makeupNav','designNav'];
+
+  const DE_RU={
+    'Regler':'Настройки','Filter':'Фильтры','Werkzeuge':'Инструменты','Make-up':'Макияж','Design':'Дизайн',
+    'Bild einstellen':'Настройка изображения','Licht':'Свет','Farbe':'Цвет','Details':'Детали','HSL Farben':'Цвета HSL',
+    'Look auswählen':'Выбор стиля','Beauty':'Красота','App-Design':'Дизайн приложения','Licht & Tonwerte':'Свет и тон',
+    'Farbe global':'Общий цвет','Details & Struktur':'Детали и структура','Einzelne Farben':'Отдельные цвета',
+    'Belichtung':'Экспозиция','Helligkeit':'Яркость','Kontrast':'Контраст','Highlights':'Света','Schatten':'Тени',
+    'Weiß':'Белые','Schwarz':'Чёрные','Sättigung':'Насыщенность','Dynamik':'Живость','Temperatur':'Температура',
+    'Farbton':'Оттенок','Klarheit':'Чёткость','Schärfe':'Резкость','Körnung':'Зерно','Vignette':'Виньетка',
+    'Zuschneiden':'Кадрирование','Exportieren':'Экспорт','Foto':'Фото','Auto':'Авто','Zurücksetzen':'Сбросить'
+  };
+  const RU_DE=Object.fromEntries(Object.entries(DE_RU).map(([a,b])=>[b,a]));
+
+  function status(t){const el=q('#runtimeStatus'); if(el) el.textContent=t}
+  function showPanel(id){
+    panels.forEach(p=>{const el=q('#'+p); if(el) el.hidden=p!==id});
+    qa('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  }
+  function showCategory(cat){
+    qa('.cat').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+    navs.forEach(n=>{const el=q('#'+n); if(el) el.hidden=true});
+    const navMap={adjust:'adjustNav',filters:'filterNav',tools:'toolsNav',makeup:'makeupNav',design:'designNav'};
+    const panelMap={adjust:'light',filters:'filter',tools:'crop',makeup:'makeup',design:'design'};
+    const n=q('#'+navMap[cat]); if(n)n.hidden=false;
+    showPanel(panelMap[cat]);
+  }
+  function setMode(light){
+    document.body.classList.toggle('mode-light',light);
+    try{localStorage.setItem('lumaMode',light?'light':'dark')}catch(_){}
+    const b=q('#modeToggle'); if(b)b.textContent=light?'🌙':'☀️';
+    const meta=q('meta[name="theme-color"]'); if(meta)meta.content=light?'#f2f2f7':'#0a0f1a';
+    status(light?'Day Mode':'Dark Mode');
+  }
+  function setLang(ru){
+    const map=ru?DE_RU:RU_DE;
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const nodes=[]; while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(n=>{const t=n.nodeValue.trim(); if(map[t])n.nodeValue=n.nodeValue.replace(t,map[t])});
+    document.documentElement.lang=ru?'ru':'de';
+    try{localStorage.setItem('lumaLang',ru?'ru':'de')}catch(_){}
+    const b=q('#langToggle'); if(b)b.textContent=ru?'🇩🇪':'🇷🇺';
+    status(ru?'Язык: русский':'Sprache: Deutsch');
+  }
+
+  document.addEventListener('click', e => {
+    const btn=e.target.closest('button');
+    if(!btn)return;
+
+    if(btn.id==='modeToggle'){e.preventDefault();e.stopImmediatePropagation();setMode(!document.body.classList.contains('mode-light'));return}
+    if(btn.id==='langToggle'){e.preventDefault();e.stopImmediatePropagation();setLang(document.documentElement.lang!=='ru');return}
+
+    if(btn.classList.contains('cat')){
+      e.preventDefault();e.stopImmediatePropagation();showCategory(btn.dataset.cat);return;
+    }
+    if(btn.classList.contains('tab') && btn.dataset.tab){
+      e.preventDefault();e.stopImmediatePropagation();showPanel(btn.dataset.tab);return;
+    }
+    if(btn.classList.contains('themeCard')){
+      e.preventDefault();e.stopImmediatePropagation();
+      document.body.classList.remove('theme-dark','theme-rose','theme-nude','theme-lavender','theme-emerald','theme-blue');
+      document.body.classList.add('theme-'+btn.dataset.theme);
+      qa('.themeCard').forEach(x=>x.classList.toggle('active',x===btn));
+      try{localStorage.setItem('lumaTheme',btn.dataset.theme)}catch(_){}
+      status('Theme: '+btn.textContent.trim());return;
+    }
+    if(btn.classList.contains('patternBtn')){
+      e.preventDefault();e.stopImmediatePropagation();
+      document.body.classList.remove('pattern-tattoo','pattern-marble','pattern-floral');
+      if(btn.dataset.pattern!=='none')document.body.classList.add('pattern-'+btn.dataset.pattern);
+      qa('.patternBtn').forEach(x=>x.classList.toggle('active',x===btn));
+      try{localStorage.setItem('lumaPattern',btn.dataset.pattern)}catch(_){}
+      status('Hintergrund: '+btn.textContent.trim());return;
+    }
+  }, true);
+
+  try{
+    const mode=localStorage.getItem('lumaMode'); if(mode)setMode(mode==='light');
+    const lang=localStorage.getItem('lumaLang'); if(lang==='ru' && document.documentElement.lang!=='ru')setLang(true);
+  }catch(_){}
 })();
 </script></body></html>
