@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LumaEdit">
 <link rel="manifest" href="manifest.webmanifest">
-<title>LumaEdit 0.6.3</title>
+<title>LumaEdit 0.6.4</title>
 <style>
 :root{--bg:#070b12;--panel:#0f1726;--panel2:#162237;--line:#273752;--txt:#f6f8fc;--muted:#93a4bc;--acc:#7b8cff;--ok:#4bd9a3}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;min-height:100%}body{padding:max(10px,env(safe-area-inset-top)) 10px max(12px,env(safe-area-inset-bottom))}
@@ -138,69 +138,75 @@ body{overscroll-behavior-x:none}
   .brand{font-size:21px}
   .badge{font-size:9px}
 }
+
+.mode-light{--bg:#f2f2f7!important;--panel:#ffffff!important;--panel2:#f8f8fb!important;--line:#d3d3da!important;--txt:#111114!important;--muted:#6f6f78!important}
+.mode-light.pattern-tattoo,.mode-light.pattern-marble,.mode-light.pattern-floral{background-image:none!important}
+.mode-light .stage{background:#e7e7ec!important}
+.mode-light .top,.mode-light #adjustNav,.mode-light #filterNav,.mode-light #toolsNav,.mode-light #makeupNav,.mode-light #designNav,.mode-light .categories{background:rgba(248,248,250,.92)!important}
+.mode-light .panel{background:rgba(255,255,255,.94)!important}
 </style>
 </head>
 <body><div class="app">
 <div class="top">
-  <div><div class="brand">LumaEdit <span class="badge">0.6.3</span></div><div class="sub">Photo & Beauty Studio</div></div>
-  <div class="actions"><button class="btn iconbtn" id="modeToggle" aria-label="Darstellung">☀︎</button><button class="btn iconbtn flagbtn" id="langToggle" aria-label="Sprache">🇷🇺</button><button class="btn iconbtn" id="undo" disabled>↶</button><button class="btn iconbtn" id="redo" disabled>↷</button><button class="btn" id="auto" disabled>Auto</button><button class="btn" id="open">Foto</button></div>
+  <div><div class="brand">LumaEdit <span class="badge">0.6.4</span></div><div class="sub">Photo & Beauty Studio</div></div>
+  <div class="actions"><button class="btn iconbtn" id="modeToggle" aria-label="Darstellung">☀︎</button><button class="btn iconbtn flagbtn" id="langToggle" aria-label="Sprache">🇷🇺</button><button class="btn iconbtn" id="undo" disabled>↶</button><button class="btn iconbtn" id="redo" disabled>↷</button><button class="btn" id="auto" disabled data-i18n="auto">Auto</button><button class="btn" id="open" data-i18n="photo">Foto</button></div>
 </div>
 <input id="file" type="file" accept="image/*" hidden>
 <div class="stage" id="stage"><div class="empty" id="empty"><b>Foto auswählen</b>Danach kannst du direkt bearbeiten.</div><canvas id="cv" hidden></canvas><div class="zoomBadge" id="zoomBadge" hidden>100%</div></div>
 
 <div class="categories">
-<button class="cat active" data-cat="adjust"><span class="navIcon">◐</span><span>Regler</span></button>
-<button class="cat" data-cat="filters"><span class="navIcon">◈</span><span>Filter</span></button>
-<button class="cat" data-cat="tools"><span class="navIcon">⌁</span><span>Werkzeuge</span></button>
-<button class="cat" data-cat="makeup"><span class="navIcon">✦</span><span>Make-up</span></button>
-<button class="cat" data-cat="design"><span class="navIcon">◉</span><span>Design</span></button>
+<button class="cat active" data-cat="adjust"><span class="navIcon">◐</span><span data-i18n="adjust">Regler</span></button>
+<button class="cat" data-cat="filters"><span class="navIcon">◈</span><span data-i18n="filter">Filter</span></button>
+<button class="cat" data-cat="tools"><span class="navIcon">⌁</span><span data-i18n="tools">Werkzeuge</span></button>
+<button class="cat" data-cat="makeup"><span class="navIcon">✦</span><span data-i18n="makeup">Make-up</span></button>
+<button class="cat" data-cat="design"><span class="navIcon">◉</span><span data-i18n="design">Design</span></button>
 </div>
 <div id="adjustNav">
-  <div class="sectionTitle">Bild einstellen</div>
+  <div class="sectionTitle" data-i18n="imageSettings">Bild einstellen</div>
   <div class="subtabs">
-    <button class="tab active" data-tab="light">Licht</button>
-    <button class="tab" data-tab="color">Farbe</button>
-    <button class="tab" data-tab="detail">Details</button>
-    <button class="tab" data-tab="hsl">HSL Farben</button>
+    <button class="tab active" data-tab="light" data-i18n="light">Licht</button>
+    <button class="tab" data-tab="color" data-i18n="color">Farbe</button>
+    <button class="tab" data-tab="detail" data-i18n="details">Details</button>
+    <button class="tab" data-tab="hsl" data-i18n="hslColors">HSL Farben</button>
   </div>
 </div>
-<div id="filterNav" hidden><div class="sectionTitle">Look auswählen</div></div>
+<div id="filterNav" hidden><div class="sectionTitle" data-i18n="chooseLook">Look auswählen</div></div>
 <div id="toolsNav" hidden>
-  <div class="sectionTitle">Werkzeuge</div>
+  <div class="sectionTitle" data-i18n="tools">Werkzeuge</div>
   <div class="subtabs">
     <button class="tab active" data-tab="crop">Zuschneiden</button>
     <button class="tab" data-tab="export">Exportieren</button>
   </div>
 </div>
-<div id="makeupNav" hidden><div class="sectionTitle">Beauty</div></div>
-<div id="designNav" hidden><div class="sectionTitle">App-Design</div></div>
+<div id="makeupNav" hidden><div class="sectionTitle" data-i18n="beauty">Beauty</div></div>
+<div id="designNav" hidden><div class="sectionTitle" data-i18n="appDesign">App-Design</div></div>
 
-<div class="panel" id="light"><div class="sectionTitle">Licht & Tonwerte</div>
-<div class="row"><label>Belichtung</label><input data-k="exposure" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Helligkeit</label><input data-k="brightness" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Kontrast</label><input data-k="contrast" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Highlights</label><input data-k="highlights" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Schatten</label><input data-k="shadows" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Weiß</label><input data-k="whites" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Schwarz</label><input data-k="blacks" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="panel" id="light"><div class="sectionTitle" data-i18n="lightTones">Licht & Tonwerte</div>
+<div class="row"><label data-i18n="exposure">Belichtung</label><input data-k="exposure" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="brightness">Helligkeit</label><input data-k="brightness" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="contrast">Kontrast</label><input data-k="contrast" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="highlights">Highlights</label><input data-k="highlights" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="shadows">Schatten</label><input data-k="shadows" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="whites">Weiß</label><input data-k="whites" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="blacks">Schwarz</label><input data-k="blacks" type="range" min="-100" max="100" value="0"><output>0</output></div>
 </div>
 
-<div class="panel" id="color" hidden><div class="sectionTitle">Farbe global</div>
-<div class="row"><label>Sättigung</label><input data-k="saturate" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Dynamik</label><input data-k="vibrance" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Temperatur</label><input data-k="warmth" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Farbton</label><input data-k="tint" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="panel" id="color" hidden><div class="sectionTitle" data-i18n="globalColor">Farbe global</div>
+<div class="row"><label data-i18n="saturation">Sättigung</label><input data-k="saturate" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="vibrance">Dynamik</label><input data-k="vibrance" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="temperature">Temperatur</label><input data-k="warmth" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="tint">Farbton</label><input data-k="tint" type="range" min="-100" max="100" value="0"><output>0</output></div>
 <div class="row"><label>Fade</label><input data-k="fade" type="range" min="0" max="100" value="0"><output>0</output></div>
 </div>
 
-<div class="panel" id="detail" hidden><div class="sectionTitle">Details & Struktur</div>
-<div class="row"><label>Klarheit</label><input data-k="clarity" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Schärfe</label><input data-k="sharpness" type="range" min="0" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Körnung</label><input data-k="grain" type="range" min="0" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Vignette</label><input data-k="vignette" type="range" min="0" max="100" value="0"><output>0</output></div>
+<div class="panel" id="detail" hidden><div class="sectionTitle" data-i18n="detailsStructure">Details & Struktur</div>
+<div class="row"><label data-i18n="clarity">Klarheit</label><input data-k="clarity" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="sharpness">Schärfe</label><input data-k="sharpness" type="range" min="0" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="grain">Körnung</label><input data-k="grain" type="range" min="0" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="vignette">Vignette</label><input data-k="vignette" type="range" min="0" max="100" value="0"><output>0</output></div>
 </div>
 
-<div class="panel" id="hsl" hidden><div class="sectionTitle">Einzelne Farben</div>
+<div class="panel" id="hsl" hidden><div class="sectionTitle" data-i18n="singleColors">Einzelne Farben</div>
 <div class="hslHead">
 <button class="hslColor active" data-h="red">Rot</button>
 <button class="hslColor" data-h="orange">Orange</button>
@@ -211,50 +217,50 @@ body{overscroll-behavior-x:none}
 <button class="hslColor" data-h="purple">Lila</button>
 <button class="hslColor" data-h="magenta">Magenta</button>
 </div>
-<div class="row"><label>Farbton</label><input id="hHue" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Sättigung</label><input id="hSat" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="tint">Farbton</label><input id="hHue" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="saturation">Sättigung</label><input id="hSat" type="range" min="-100" max="100" value="0"><output>0</output></div>
 <div class="row"><label>Luminanz</label><input id="hLum" type="range" min="-100" max="100" value="0"><output>0</output></div>
 <div class="mini">Bearbeitet nur den gewählten Farbbereich.</div>
 </div>
 
-<div class="panel" id="filter" hidden><div class="sectionTitle">Filter · mit Vorschau</div>
+<div class="panel" id="filter" hidden><div class="sectionTitle" data-i18n="filterPreview">Filter · mit Vorschau</div>
 <div class="previewGrid">
-<button class="previewCard filter active" disabled data-f="none"><div class="thumb"><canvas class="filterThumb" data-preview="none" width="180" height="110"></canvas></div>Original<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="vivid"><div class="thumb"><canvas class="filterThumb" data-preview="vivid" width="180" height="110"></canvas></div>Vivid<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="portrait"><div class="thumb"><canvas class="filterThumb" data-preview="portrait" width="180" height="110"></canvas></div>Portrait<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="warm"><div class="thumb"><canvas class="filterThumb" data-preview="warm" width="180" height="110"></canvas></div>Warm<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="cool"><div class="thumb"><canvas class="filterThumb" data-preview="cool" width="180" height="110"></canvas></div>Cool<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="mono"><div class="thumb"><canvas class="filterThumb" data-preview="mono" width="180" height="110"></canvas></div>Schwarzweiß<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="film"><div class="thumb"><canvas class="filterThumb" data-preview="film" width="180" height="110"></canvas></div>Film<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="matte"><div class="thumb"><canvas class="filterThumb" data-preview="matte" width="180" height="110"></canvas></div>Matte<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="dramatic"><div class="thumb"><canvas class="filterThumb" data-preview="dramatic" width="180" height="110"></canvas></div>Dramatic<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="night"><div class="thumb"><canvas class="filterThumb" data-preview="night" width="180" height="110"></canvas></div>Night<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="soft"><div class="thumb"><canvas class="filterThumb" data-preview="soft" width="180" height="110"></canvas></div>Soft<small>Vorschau</small></button>
-<button class="previewCard filter" disabled data-f="retro"><div class="thumb"><canvas class="filterThumb" data-preview="retro" width="180" height="110"></canvas></div>Retro<small>Vorschau</small></button>
+<button class="previewCard filter active" disabled data-f="none"><div class="thumb"><canvas class="filterThumb" data-preview="none" width="180" height="110"></canvas></div data-i18n="original">Original<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="vivid"><div class="thumb"><canvas class="filterThumb" data-preview="vivid" width="180" height="110"></canvas></div>Vivid<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="portrait"><div class="thumb"><canvas class="filterThumb" data-preview="portrait" width="180" height="110"></canvas></div>Portrait<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="warm"><div class="thumb"><canvas class="filterThumb" data-preview="warm" width="180" height="110"></canvas></div>Warm<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="cool"><div class="thumb"><canvas class="filterThumb" data-preview="cool" width="180" height="110"></canvas></div>Cool<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="mono"><div class="thumb"><canvas class="filterThumb" data-preview="mono" width="180" height="110"></canvas></div data-i18n="mono">Schwarzweiß<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="film"><div class="thumb"><canvas class="filterThumb" data-preview="film" width="180" height="110"></canvas></div>Film<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="matte"><div class="thumb"><canvas class="filterThumb" data-preview="matte" width="180" height="110"></canvas></div>Matte<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="dramatic"><div class="thumb"><canvas class="filterThumb" data-preview="dramatic" width="180" height="110"></canvas></div>Dramatic<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="night"><div class="thumb"><canvas class="filterThumb" data-preview="night" width="180" height="110"></canvas></div>Night<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="soft"><div class="thumb"><canvas class="filterThumb" data-preview="soft" width="180" height="110"></canvas></div>Soft<small data-i18n="preview">Vorschau</small></button>
+<button class="previewCard filter" disabled data-f="retro"><div class="thumb"><canvas class="filterThumb" data-preview="retro" width="180" height="110"></canvas></div>Retro<small data-i18n="preview">Vorschau</small></button>
 </div>
 <div class="mini">Du siehst den Look bereits auf der kleinen Vorschau, bevor du ihn auswählst.</div>
 </div>
 
 <div class="panel" id="makeup" hidden>
-<div class="sectionTitle">Augen-Make-up · Foto-Vorschau</div>
+<div class="sectionTitle" data-i18n="eyeMakeupPreview">Augen-Make-up · Foto-Vorschau</div>
 <div class="makeupGrid">
-<button class="makeupCard active" data-makeup="natural"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/5119522/pexels-photo-5119522.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Natural eye makeup"></div>Natural<small>Sanft & alltagstauglich</small></button>
-<button class="makeupCard" data-makeup="smokey"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/32651775/pexels-photo-32651775.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Smokey eye makeup"></div>Smokey<small>Dunkel & weich verblendet</small></button>
-<button class="makeupCard" data-makeup="cateye"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/4226469/pexels-photo-4226469.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Cat eye makeup"></div>Cat Eye<small>Präziser Wing</small></button>
-<button class="makeupCard" data-makeup="glam"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/20719420/pexels-photo-20719420.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Soft glam eye makeup"></div>Soft Glam<small>Warm & elegant</small></button>
-<button class="makeupCard" data-makeup="blue"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/4226469/pexels-photo-4226469.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Blue accent eye makeup"></div>Blue Accent<small>Farbiger Akzent</small></button>
-<button class="makeupCard" data-makeup="glitter"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/12436808/pexels-photo-12436808.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Glitter eye makeup"></div>Glitter<small>Festlich & auffällig</small></button>
+<button class="makeupCard active" data-makeup="natural"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/5119522/pexels-photo-5119522.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Natural eye makeup"></div>Natural<small data-i18n="softDaily">Sanft & alltagstauglich</small></button>
+<button class="makeupCard" data-makeup="smokey"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/32651775/pexels-photo-32651775.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Smokey eye makeup"></div>Smokey<small data-i18n="darkSmokey">Dunkel & weich verblendet</small></button>
+<button class="makeupCard" data-makeup="cateye"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/4226469/pexels-photo-4226469.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Cat eye makeup"></div>Cat Eye<small data-i18n="preciseWing">Präziser Wing</small></button>
+<button class="makeupCard" data-makeup="glam"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/20719420/pexels-photo-20719420.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Soft glam eye makeup"></div>Soft Glam<small data-i18n="warmElegant">Warm & elegant</small></button>
+<button class="makeupCard" data-makeup="blue"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/4226469/pexels-photo-4226469.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Blue accent eye makeup"></div>Blue Accent<small data-i18n="colorAccent">Farbiger Akzent</small></button>
+<button class="makeupCard" data-makeup="glitter"><div class="makeupVisual"><img loading="lazy" src="https://images.pexels.com/photos/12436808/pexels-photo-12436808.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Glitter eye makeup"></div>Glitter<small data-i18n="festive">Festlich & auffällig</small></button>
 </div>
 <div class="makeupControls">
 <button class="btn" id="markEyes">👁 Augen markieren</button>
-<button class="btn" id="makeupOff">Make-up aus</button>
+<button class="btn" id="makeupOff" data-i18n="makeupOff">Make-up aus</button>
 </div>
-<div class="row"><label>Intensität</label><input id="makeupIntensity" type="range" min="0" max="100" value="65"><output>65</output></div>
+<div class="row"><label data-i18n="intensity">Intensität</label><input id="makeupIntensity" type="range" min="0" max="100" value="65"><output>65</output></div>
 <div class="mini">Für eine zuverlässige Platzierung tippst du nach „Augen markieren“ einmal auf jedes Auge im Foto. Danach wirken die Stile direkt im Bild.</div>
 </div>
 
 <div class="panel" id="design" hidden>
-<div class="sectionTitle">Farbschema</div>
+<div class="sectionTitle" data-i18n="colorScheme">Farbschema</div>
 <div class="themeGrid">
 <button class="themeCard active" data-theme="dark"><div class="themeSwatch" style="background:linear-gradient(135deg,#070b12,#162237,#7b8cff)"></div>Dark Elegant</button>
 <button class="themeCard" data-theme="rose"><div class="themeSwatch" style="background:linear-gradient(135deg,#1b1217,#38242f,#d889ac)"></div>Rosé Nude</button>
@@ -263,19 +269,19 @@ body{overscroll-behavior-x:none}
 <button class="themeCard" data-theme="emerald"><div class="themeSwatch" style="background:linear-gradient(135deg,#0b1513,#19312b,#57c4a3)"></div>Emerald</button>
 <button class="themeCard" data-theme="blue"><div class="themeSwatch" style="background:linear-gradient(135deg,#08111d,#172940,#5f9ff0)"></div>Blue Night</button>
 </div>
-<div class="sectionTitle" style="margin-top:12px">Hintergrundstruktur</div>
+<div class="sectionTitle" style="margin-top:12px" data-i18n="backgroundTexture">Hintergrundstruktur</div>
 <div class="patternRow">
-<button class="patternBtn active" data-pattern="none">Clean</button>
-<button class="patternBtn" data-pattern="tattoo">Tattoo Line</button>
-<button class="patternBtn" data-pattern="marble">Soft Marble</button>
-<button class="patternBtn" data-pattern="floral">Minimal Floral</button>
+<button class="patternBtn active" data-pattern="none" data-i18n="clean">Clean</button>
+<button class="patternBtn" data-pattern="tattoo" data-i18n="tattooLine">Tattoo Line</button>
+<button class="patternBtn" data-pattern="marble" data-i18n="softMarble">Soft Marble</button>
+<button class="patternBtn" data-pattern="floral" data-i18n="minimalFloral">Minimal Floral</button>
 </div>
 <div class="mini">Themes ändern nur die App-Oberfläche, nicht dein Foto.</div>
 </div>
 
-<div class="panel" id="crop" hidden><div class="sectionTitle">Zuschneiden & Ausrichten</div>
+<div class="panel" id="crop" hidden><div class="sectionTitle" data-i18n="cropAlign">Zuschneiden & Ausrichten</div>
 <div class="grid3">
-<button class="btn" disabled data-r="0">Frei</button>
+<button class="btn" disabled data-r="0" data-i18n="free">Frei</button>
 <button class="btn" disabled data-r="1">1:1</button>
 <button class="btn" disabled data-r="0.8">4:5</button>
 <button class="btn" disabled data-r="1.5">3:2</button>
@@ -283,19 +289,19 @@ body{overscroll-behavior-x:none}
 <button class="btn" disabled data-r="0.5625">9:16</button>
 </div>
 <div class="grid2" style="margin-top:7px"><button class="btn" id="rot" disabled>↻ Drehen</button><button class="btn" id="flipH" disabled>↔ Spiegeln</button></div>
-<div class="row"><label>Zoom</label><input id="cropZoom" type="range" min="100" max="220" value="100"><output>100%</output></div>
-<div class="row"><label>Horizontal</label><input id="cropX" type="range" min="-100" max="100" value="0"><output>0</output></div>
-<div class="row"><label>Vertikal</label><input id="cropY" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="zoom">Zoom</label><input id="cropZoom" type="range" min="100" max="220" value="100"><output>100%</output></div>
+<div class="row"><label data-i18n="horizontal">Horizontal</label><input id="cropX" type="range" min="-100" max="100" value="0"><output>0</output></div>
+<div class="row"><label data-i18n="vertical">Vertikal</label><input id="cropY" type="range" min="-100" max="100" value="0"><output>0</output></div>
 <div class="mini">Mit Zoom und Position kannst du den Bildausschnitt jetzt frei verschieben.</div>
 </div>
 
-<div class="panel" id="export" hidden><div class="sectionTitle">Speichern & Vergleichen</div>
+<div class="panel" id="export" hidden><div class="sectionTitle" data-i18n="saveCompare">Speichern & Vergleichen</div>
 <div class="grid2">
 <select id="format" class="quality"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select>
 <select id="quality" class="quality"><option value="0.75">Qualität 75%</option><option value="0.9" selected>Qualität 90%</option><option value="0.97">Qualität 97%</option></select>
 </div>
-<div class="bottom"><button class="btn" id="reset" disabled>Zurücksetzen</button><button class="btn primary" id="save" disabled>Exportieren</button></div>
-<div class="compareWrap"><span class="mini" style="margin:0">Original</span><input id="compare" type="range" min="0" max="100" value="100"><span class="mini" style="margin:0">Bearbeitet</span></div>
+<div class="bottom"><button class="btn" id="reset" disabled data-i18n="reset">Zurücksetzen</button><button class="btn primary" id="save" disabled>Exportieren</button></div>
+<div class="compareWrap"><span class="mini" style="margin:0" data-i18n="original">Original</span><input id="compare" type="range" min="0" max="100" value="100"><span class="mini" style="margin:0" data-i18n="edited">Bearbeitet</span></div>
 <div class="mini">Vergleichsregler: links Original, rechts Bearbeitung. Bei PNG wird die Qualitätswahl ignoriert.</div>
 </div>
 </div>
@@ -399,29 +405,46 @@ document.getElementById('markEyes').onclick=()=>{if(!img){document.getElementByI
 document.getElementById('makeupOff').onclick=()=>{if(!img)return;makeupStyle='none';render();snap();document.getElementById('runtimeStatus').textContent='Make-up ausgeschaltet'};
 document.getElementById('makeupIntensity').oninput=e=>{makeupIntensity=+e.target.value;e.target.parentElement.querySelector('output').textContent=e.target.value;if(img&&eyePoints.length===2)render()};
 document.getElementById('makeupIntensity').onchange=()=>{if(img&&eyePoints.length===2)snap()};
-const translations={
-'Regler':'Настройка','Filter':'Фильтры','Werkzeuge':'Инструменты','Make-up':'Макияж','Design':'Дизайн',
-'Bild einstellen':'Настройка изображения','Licht':'Свет','Farbe':'Цвет','Details':'Детали','HSL Farben':'Цвета HSL',
-'Look auswählen':'Выбор стиля','Werkzeuge':'Инструменты','Zuschneiden':'Кадрирование','Exportieren':'Экспорт',
-'Beauty':'Красота','App-Design':'Дизайн приложения','Licht & Tonwerte':'Свет и тон','Farbe global':'Общий цвет','Details & Struktur':'Детали и структура','Einzelne Farben':'Отдельные цвета',
-'Belichtung':'Экспозиция','Helligkeit':'Яркость','Kontrast':'Контраст','Highlights':'Света','Schatten':'Тени','Weiß':'Белые','Schwarz':'Чёрные',
-'Sättigung':'Насыщенность','Dynamik':'Живость','Temperatur':'Температура','Farbton':'Оттенок','Klarheit':'Чёткость','Schärfe':'Резкость','Körnung':'Зерно','Vignette':'Виньетка',
-'Filter · mit Vorschau':'Фильтры · с предпросмотром','Vorschau':'Предпросмотр','Schwarzweiß':'Чёрно-белый',
-'Augen-Make-up · Foto-Vorschau':'Макияж глаз · предпросмотр','Sanft & alltagstauglich':'Мягкий повседневный','Dunkel & weich verblendet':'Тёмный дымчатый','Präziser Wing':'Чёткая стрелка','Warm & elegant':'Тёплый элегантный','Farbiger Akzent':'Цветной акцент','Festlich & auffällig':'Праздничный яркий',
-'Augen markieren':'Отметить глаза','Make-up aus':'Без макияжа','Intensität':'Интенсивность',
-'Farbschema':'Цветовая схема','Hintergrundstruktur':'Фон','Clean':'Чистый','Tattoo Line':'Тату-линии','Soft Marble':'Мягкий мрамор','Minimal Floral':'Минималистичные цветы',
-'Zuschneiden & Ausrichten':'Кадрирование и выравнивание','Frei':'Свободно','Drehen':'Повернуть','Spiegeln':'Отразить','Zoom':'Масштаб','Horizontal':'По горизонтали','Vertikal':'По вертикали',
-'Speichern & Vergleichen':'Сохранение и сравнение','Zurücksetzen':'Сбросить','Original':'Оригинал','Bearbeitet':'Обработано','Foto':'Фото','Auto':'Авто'
+const I18N={
+ de:{
+  adjust:'Regler',filter:'Filter',tools:'Werkzeuge',makeup:'Make-up',design:'Design',imageSettings:'Bild einstellen',light:'Licht',color:'Farbe',details:'Details',hslColors:'HSL Farben',chooseLook:'Look auswählen',beauty:'Beauty',appDesign:'App-Design',
+  lightTones:'Licht & Tonwerte',globalColor:'Farbe global',detailsStructure:'Details & Struktur',singleColors:'Einzelne Farben',
+  exposure:'Belichtung',brightness:'Helligkeit',contrast:'Kontrast',highlights:'Highlights',shadows:'Schatten',whites:'Weiß',blacks:'Schwarz',saturation:'Sättigung',vibrance:'Dynamik',temperature:'Temperatur',tint:'Farbton',clarity:'Klarheit',sharpness:'Schärfe',grain:'Körnung',vignette:'Vignette',
+  filterPreview:'Filter · mit Vorschau',preview:'Vorschau',mono:'Schwarzweiß',eyeMakeupPreview:'Augen-Make-up · Foto-Vorschau',softDaily:'Sanft & alltagstauglich',darkSmokey:'Dunkel & weich verblendet',preciseWing:'Präziser Wing',warmElegant:'Warm & elegant',colorAccent:'Farbiger Akzent',festive:'Festlich & auffällig',
+  markEyes:'Augen markieren',makeupOff:'Make-up aus',intensity:'Intensität',colorScheme:'Farbschema',backgroundTexture:'Hintergrundstruktur',clean:'Clean',tattooLine:'Tattoo Line',softMarble:'Soft Marble',minimalFloral:'Minimal Floral',
+  cropAlign:'Zuschneiden & Ausrichten',free:'Frei',rotate:'Drehen',mirror:'Spiegeln',zoom:'Zoom',horizontal:'Horizontal',vertical:'Vertikal',saveCompare:'Speichern & Vergleichen',reset:'Zurücksetzen',original:'Original',edited:'Bearbeitet',photo:'Foto',auto:'Auto'
+ },
+ ru:{
+  adjust:'Настройки',filter:'Фильтры',tools:'Инструменты',makeup:'Макияж',design:'Дизайн',imageSettings:'Настройка изображения',light:'Свет',color:'Цвет',details:'Детали',hslColors:'Цвета HSL',chooseLook:'Выбор стиля',beauty:'Красота',appDesign:'Дизайн приложения',
+  lightTones:'Свет и тон',globalColor:'Общий цвет',detailsStructure:'Детали и структура',singleColors:'Отдельные цвета',
+  exposure:'Экспозиция',brightness:'Яркость',contrast:'Контраст',highlights:'Света',shadows:'Тени',whites:'Белые',blacks:'Чёрные',saturation:'Насыщенность',vibrance:'Живость',temperature:'Температура',tint:'Оттенок',clarity:'Чёткость',sharpness:'Резкость',grain:'Зерно',vignette:'Виньетка',
+  filterPreview:'Фильтры · с предпросмотром',preview:'Предпросмотр',mono:'Чёрно-белый',eyeMakeupPreview:'Макияж глаз · предпросмотр',softDaily:'Мягкий повседневный',darkSmokey:'Тёмный дымчатый',preciseWing:'Чёткая стрелка',warmElegant:'Тёплый элегантный',colorAccent:'Цветной акцент',festive:'Праздничный яркий',
+  markEyes:'Отметить глаза',makeupOff:'Без макияжа',intensity:'Интенсивность',colorScheme:'Цветовая схема',backgroundTexture:'Фон',clean:'Чистый',tattooLine:'Тату-линии',softMarble:'Мягкий мрамор',minimalFloral:'Минималистичные цветы',
+  cropAlign:'Кадрирование и выравнивание',free:'Свободно',rotate:'Повернуть',mirror:'Отразить',zoom:'Масштаб',horizontal:'По горизонтали',vertical:'По вертикали',saveCompare:'Сохранение и сравнение',reset:'Сбросить',original:'Оригинал',edited:'Обработано',photo:'Фото',auto:'Авто'
+ }
 };
-const reverseTranslations=Object.fromEntries(Object.entries(translations).map(([k,v])=>[v,k]));
-function walkText(node,map){node.childNodes.forEach(n=>{if(n.nodeType===3){const raw=n.nodeValue,trim=raw.trim();if(trim&&map[trim])n.nodeValue=raw.replace(trim,map[trim])}else if(n.nodeType===1&&!['SCRIPT','STYLE'].includes(n.tagName))walkText(n,map)})}
-function applyLanguage(lang){const current=document.documentElement.lang==='ru'?'ru':'de';if(lang===current)return;walkText(document.body,lang==='ru'?translations:reverseTranslations);document.documentElement.lang=lang;localStorage.setItem('lumaLang',lang);document.getElementById('langToggle').textContent=lang==='ru'?'🇩🇪':'🇷🇺';}
+function applyLanguage(lang){
+ document.documentElement.lang=lang;
+ document.querySelectorAll('[data-i18n]').forEach(el=>{
+   const k=el.dataset.i18n;if(I18N[lang]&&I18N[lang][k])el.textContent=I18N[lang][k];
+ });
+ localStorage.setItem('lumaLang',lang);
+ document.getElementById('langToggle').textContent=lang==='ru'?'🇩🇪':'🇷🇺';
+ document.getElementById('runtimeStatus').textContent=lang==='ru'?'Язык: русский':'Sprache: Deutsch';
+}
 document.getElementById('langToggle').onclick=()=>applyLanguage(document.documentElement.lang==='ru'?'de':'ru');
+
 const savedMode=localStorage.getItem('lumaMode')||'dark';
-function applyMode(mode){document.body.classList.toggle('mode-light',mode==='light');localStorage.setItem('lumaMode',mode);document.getElementById('modeToggle').textContent=mode==='light'?'🌙':'☀️';}
+function applyMode(mode){
+ document.body.classList.toggle('mode-light',mode==='light');
+ localStorage.setItem('lumaMode',mode);
+ document.getElementById('modeToggle').textContent=mode==='light'?'🌙':'☀️';
+ document.querySelector('meta[name="theme-color"]').setAttribute('content',mode==='light'?'#f2f2f7':'#0a0f1a');
+ document.getElementById('runtimeStatus').textContent=(document.documentElement.lang==='ru'?(mode==='light'?'Светлая тема':'Тёмная тема'):(mode==='light'?'Day Mode':'Dark Mode'));
+}
 document.getElementById('modeToggle').onclick=()=>applyMode(document.body.classList.contains('mode-light')?'dark':'light');
 applyMode(savedMode);
-const savedLang=localStorage.getItem('lumaLang')||'de';if(savedLang==='ru')applyLanguage('ru');
+const savedLang=localStorage.getItem('lumaLang')||'de';applyLanguage(savedLang);
 
 const savedTheme=localStorage.getItem('lumaTheme')||'dark',savedPattern=localStorage.getItem('lumaPattern')||'none';document.body.classList.add('theme-'+savedTheme);if(savedPattern!=='none')document.body.classList.add('pattern-'+savedPattern);document.querySelectorAll('.themeCard').forEach(b=>b.classList.toggle('active',b.dataset.theme===savedTheme));document.querySelectorAll('.patternBtn').forEach(b=>b.classList.toggle('active',b.dataset.pattern===savedPattern));
 
